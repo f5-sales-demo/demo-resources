@@ -1,0 +1,34 @@
+---
+title: Demo Resources
+description: Catalog of pre-configured Azure VM components for F5 Distributed Cloud demo environments. Each component is a Terraform-deployable VM with purpose-built software pre-installed.
+template: splash
+hero:
+  title: Demo Resources
+  tagline: Pre-configured Azure VM components for F5 Distributed Cloud demo environments.
+---
+
+import { CardGrid } from '@astrojs/starlight/components';
+import LinkCard from '@f5xc-salesdemos/docs-theme/components/LinkCard.astro';
+
+## Components
+
+<CardGrid>
+  <LinkCard
+    icon="f5xc:distributed-apps"
+    title="Origin Server"
+    description="Ubuntu 24.04 VM with nginx reverse proxy to 41 Docker containers across 9 vulnerable web applications."
+    href="/demo-resources/origin-server/"
+  />
+  <LinkCard
+    icon="f5xc:application-traffic-insight"
+    title="Traffic Generator"
+    description="Azure VM with 50+ security testing tools and 7 pre-built attack suites."
+    href="/demo-resources/traffic-generator/"
+  />
+  <LinkCard
+    icon="f5xc:content-delivery-network"
+    title="CDN Simulator"
+    description="NGINX-based CDN edge node simulator with 67+ vendor-specific headers."
+    href="/demo-resources/cdn-simulator/"
+  />
+</CardGrid>

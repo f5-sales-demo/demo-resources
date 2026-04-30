@@ -1,0 +1,11 @@
+{
+  "customSets": [
+    {
+      "label": "Component Catalog",
+      "paths": ["origin-server*", "traffic-generator*", "cdn-simulator*"],
+      "description": "Architecture profiles for all deployable demo components"
+    }
+  ],
+  "promote": ["index*", "01-overview*"],
+  "demote": []
+}

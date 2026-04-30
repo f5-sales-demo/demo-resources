@@ -1,0 +1,46 @@
+---
+title: Traffic Generator
+description: Azure Ubuntu 24.04 VM with 50+ security testing tools and 7 pre-built attack suites for generating WAF, API, bot, reconnaissance, SSL, and JavaScript exploit traffic.
+---
+
+The traffic generator is an Azure Ubuntu 24.04 VM (Standard_F16s_v2) pre-loaded
+with 50+ security testing tools organized into 7 attack suite categories.
+
+## Tool Categories
+
+| Category | Tools | Purpose |
+|---|---|---|
+| Web Testing | Nikto, SQLMap, Gobuster, Nuclei, curl | Web application vulnerability scanning |
+| Network Analysis | Nmap, tcpdump, Wireshark CLI | Network reconnaissance and packet analysis |
+| MITM / Proxy | mitmproxy | Traffic interception and modification |
+| SSL/TLS | testssl.sh, sslscan | Certificate and cipher analysis |
+| Browser Automation | Playwright, Puppeteer | Headless browser-based attack simulation |
+| Credential Testing | Hydra | Brute-force authentication testing |
+| Exploit Frameworks | ZAP, Metasploit (full tier only) | Advanced exploitation |
+
+## Attack Suites
+
+Pre-built scripts in `/opt/traffic-generator/suites/`:
+
+- `web-app-attacks` — SQLi, XSS, path traversal against origin apps
+- `api-attacks` — API fuzzing, injection, auth bypass
+- `bot-simulation` — Headless browser and automated scraping patterns
+- `reconnaissance` — Port scanning, service enumeration
+- `ssl-scanning` — TLS configuration auditing
+- `javascript-exploits` — Client-side attack payloads
+- `traffic-generation` — Legitimate baseline traffic
+
+## Terraform Variables
+
+| Variable | Required | Default |
+|---|---|---|
+| `subscription_id` | Yes | — |
+| `target_fqdn` | Yes | — (F5 XC load balancer FQDN) |
+| `target_origin_ip` | No | — (direct origin IP for bypass testing) |
+| `tool_tier` | No | `standard` (`standard` or `full`) |
+
+## Integration
+
+Deploy after the origin server and F5 XC load balancer are configured. Set
+`target_fqdn` to the XC load balancer FQDN. Use `runner.sh` to orchestrate
+attack suites.

@@ -1,0 +1,47 @@
+---
+title: Overview
+description: What demo resources are, how to select components, and shared Azure prerequisites for deployment.
+---
+
+Demo resources are pre-configured Azure virtual machines deployable via Terraform.
+Each component is a standalone VM with purpose-built software installed and configured
+through cloud-init at first boot.
+
+## Selecting Components
+
+Components are building blocks. Select them based on what your demo needs:
+
+- **Origin server** provides vulnerable web applications that serve as targets for
+  F5 XC security features. Most demos need this.
+- **Traffic generator** produces attack and legitimate traffic against your demo
+  environment. Needed when demonstrating WAF efficacy, bot detection, or API
+  protection.
+- **CDN simulator** places an NGINX-based CDN edge between clients and origin,
+  injecting vendor-specific headers. Used for CDN integration demos.
+
+## Shared Prerequisites
+
+All components require:
+
+- An Azure subscription with contributor access
+- Terraform 1.5 or later
+- Azure CLI authenticated (`az login`)
+- An SSH key pair (default path `~/.ssh/id_ed25519.pub`)
+
+## Deployment Pattern
+
+Every component follows the same Terraform workflow:
+
+1. Clone the component repo
+2. `cd terraform/`
+3. Set required variables (each component documents its own)
+4. `terraform init && terraform plan && terraform apply`
+5. Verify via the component's health check endpoint
+
+## Cost Estimates
+
+| Component | VM Size | Monthly Estimate |
+|---|---|---|
+| Origin Server | Standard_D16s_v3 (16 vCPU, 64 GiB) | ~$486 |
+| Traffic Generator | Standard_F16s_v2 (16 vCPU, compute) | ~$389 |
+| CDN Simulator | Standard_F4s_v2 (4 vCPU, compute) | ~$122 |

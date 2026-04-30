@@ -1,0 +1,44 @@
+---
+title: Origin Server
+description: Ubuntu 24.04 Azure VM running nginx reverse proxy to 41 Docker containers across 9 vulnerable web applications for WAF, API security, bot defense, and client-side defense testing.
+---
+
+The origin server is an Ubuntu 24.04 Azure VM (Standard_D16s_v3) that runs an
+nginx reverse proxy distributing traffic to 41 Docker containers across 9
+vulnerable web applications.
+
+## Applications
+
+| Application | Path | Purpose |
+|---|---|---|
+| Juice Shop | `/juice-shop` | OWASP flagship, general web app attacks |
+| DVWA | `/dvwa` | WAF testing with configurable security levels |
+| VAmPI | `/vampi` | REST API vulnerabilities |
+| httpbin | `/httpbin` | HTTP request/response diagnostics |
+| whoami | `/whoami` | Request echo and header inspection |
+| CSD Demo | `/csd-demo` | Client-side defense JavaScript injection |
+| DVGA | `/dvga` | GraphQL API vulnerabilities |
+| RESTaurant | `/restaurant` | REST API with PostgreSQL backend |
+| crAPI | `:8888` | 7-microservice API security challenge |
+
+## Architecture
+
+- **nginx** reverse proxy with `reuseport`, sticky sessions, and proxy cache
+- **4 instances** per application for load balancing
+- **MariaDB 10.11** backend for DVWA
+- **PostgreSQL 15.4** backend for RESTaurant
+- **MongoDB + Mailhog** for crAPI microservices
+
+## Terraform Variables
+
+| Variable | Required | Default |
+|---|---|---|
+| `subscription_id` | Yes | — |
+| `resource_group_name` | No | `rg-origin-server` |
+| `location` | No | `eastus2` |
+| `vm_size` | No | `Standard_D16s_v3` |
+
+## Integration
+
+Point an F5 XC origin pool at the VM's public IP. Configure HTTP load balancer
+with path-based routing to expose individual applications through XC.
