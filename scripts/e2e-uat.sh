@@ -65,7 +65,7 @@ log "Subscription: $SUBSCRIPTION_ID"
 log "Phase 1: Deploying origin-server"
 ORIGIN_DIR="$(dirname "$REPO_ROOT")/origin-server/terraform"
 if [ -d "$ORIGIN_DIR" ]; then
-  printf 'subscription_id = "%s"\n' "$SUBSCRIPTION_ID" > "$ORIGIN_DIR/terraform.tfvars"
+  printf 'subscription_id = "%s"\n' "$SUBSCRIPTION_ID" >"$ORIGIN_DIR/terraform.tfvars"
   (cd "$ORIGIN_DIR" && terraform init -input=false >/dev/null 2>&1 && terraform apply -input=false -auto-approve >/dev/null 2>&1)
   ORIGIN_IP=$(cd "$ORIGIN_DIR" && terraform output -raw public_ip 2>/dev/null)
   check "origin-deploy" "true" "$([ -n "$ORIGIN_IP" ] && echo true || echo false)"
@@ -101,7 +101,7 @@ log "Phase 2: Deploying cdn-simulator"
 CDN_DIR="$(dirname "$REPO_ROOT")/cdn-simulator/terraform"
 if [ -d "$CDN_DIR" ] && [ -n "${ORIGIN_IP:-}" ]; then
   printf 'subscription_id = "%s"\norigin_server   = "http://%s"\norigin_host     = "%s:80"\n' \
-    "$SUBSCRIPTION_ID" "$ORIGIN_IP" "$ORIGIN_IP" > "$CDN_DIR/terraform.tfvars"
+    "$SUBSCRIPTION_ID" "$ORIGIN_IP" "$ORIGIN_IP" >"$CDN_DIR/terraform.tfvars"
   (cd "$CDN_DIR" && terraform init -input=false >/dev/null 2>&1 && terraform apply -input=false -auto-approve >/dev/null 2>&1)
   CDN_IP=$(cd "$CDN_DIR" && terraform output -raw public_ip 2>/dev/null)
   check "cdn-deploy" "true" "$([ -n "$CDN_IP" ] && echo true || echo false)"
@@ -137,7 +137,7 @@ log "Phase 3: Deploying traffic-generator"
 TG_DIR="$(dirname "$REPO_ROOT")/traffic-generator/terraform"
 if [ -d "$TG_DIR" ] && [ -n "${ORIGIN_IP:-}" ]; then
   printf 'subscription_id = "%s"\ntarget_fqdn     = "%s"\n' \
-    "$SUBSCRIPTION_ID" "$ORIGIN_IP" > "$TG_DIR/terraform.tfvars"
+    "$SUBSCRIPTION_ID" "$ORIGIN_IP" >"$TG_DIR/terraform.tfvars"
   (cd "$TG_DIR" && terraform init -input=false >/dev/null 2>&1 && terraform apply -input=false -auto-approve >/dev/null 2>&1)
   TG_IP=$(cd "$TG_DIR" && terraform output -raw public_ip 2>/dev/null)
   check "tg-deploy" "true" "$([ -n "$TG_IP" ] && echo true || echo false)"
