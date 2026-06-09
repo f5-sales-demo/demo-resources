@@ -2,26 +2,26 @@
 title: Panoramica
 description: >-
   Cosa sono le risorse demo, come selezionare i componenti e i prerequisiti
-  Azure condivisi per il deployment.
+  condivisi di Azure per il deployment.
 i18n:
   sourceHash: 7388ef989783
   translator: machine
 ---
 
 Le risorse demo sono macchine virtuali Azure preconfigurate distribuibili tramite Terraform.
-Ogni componente è una VM standalone con software specifico installato e configurato
+Ogni componente è una VM autonoma con software dedicato installato e configurato
 tramite cloud-init al primo avvio.
 
 ## Selezione dei Componenti
 
-I componenti sono blocchi costruttivi. Selezionateli in base alle esigenze della vostra demo:
+I componenti sono blocchi costitutivi. Selezionateli in base alle esigenze della vostra demo:
 
-- **Origin server** fornisce applicazioni web vulnerabili che fungono da obiettivi per
+- Il **server di origine** fornisce applicazioni web vulnerabili che fungono da obiettivi per
   le funzionalità di sicurezza di F5 XC. La maggior parte delle demo ne ha bisogno.
-- **Traffic generator** produce traffico di attacco e traffico legittimo contro il vostro ambiente
-  demo. Necessario quando si dimostrano l'efficacia del WAF, il rilevamento dei bot o la
+- Il **generatore di traffico** produce traffico di attacco e traffico legittimo contro il vostro
+  ambiente demo. Necessario quando si dimostrano l'efficacia del WAF, il rilevamento dei bot o la
   protezione delle API.
-- **CDN simulator** posiziona un edge CDN basato su NGINX tra i client e l'origin,
+- Il **simulatore CDN** posiziona un edge CDN basato su NGINX tra i client e il server di origine,
   iniettando header specifici del vendor. Utilizzato per le demo di integrazione CDN.
 
 ## Prerequisiti Condivisi
@@ -30,7 +30,7 @@ Tutti i componenti richiedono:
 
 - Una sottoscrizione Azure con accesso contributor
 - Terraform 1.5 o successivo
-- Azure CLI autenticata (`az login`)
+- Azure CLI autenticato (`az login`)
 - Una coppia di chiavi SSH (percorso predefinito `~/.ssh/id_ed25519.pub`)
 
 ## Schema di Deployment
@@ -39,11 +39,11 @@ Ogni componente segue lo stesso flusso di lavoro Terraform:
 
 1. Clonare il repository del componente
 2. `cd terraform/`
-3. Copiare `terraform.tfvars.example` in `terraform.tfvars` e impostare le variabili richieste (`subscription_id` è obbligatorio per tutti; alcuni componenti hanno ulteriori input obbligatori)
+3. Copiare `terraform.tfvars.example` in `terraform.tfvars` e impostare le variabili richieste (`subscription_id` è obbligatorio per tutti; alcuni componenti hanno input aggiuntivi obbligatori)
 4. `terraform init && terraform plan && terraform apply`
 5. Verificare tramite l'endpoint di health check del componente
 
-Il vostro identificatore deployer viene risolto automaticamente dal vostro account Azure AD e incorporato in tutti i nomi delle risorse (ad es., `rg-origin-server-lab-rmordasiewicz`).
+Il vostro identificativo di deployer viene risolto automaticamente dal vostro account Azure AD e incorporato in tutti i nomi delle risorse (ad esempio, `rg-origin-server-lab-rmordasiewicz`).
 
 ## Integrazione tra Componenti
 
@@ -57,10 +57,10 @@ Traffic Generator ──► F5 XC HTTP LB (WAF/Bot/API/CSD) ──► Origin Ser
 
 **Ordine di deployment:**
 
-1. **Origin server** — distribuire per primo, ospita le applicazioni che tutti gli altri componenti prendono come obiettivo
-2. **F5 XC HTTP load balancer** — configurare un origin pool che punti all'IP pubblico dell'origin server, quindi creare un HTTP load balancer con policy WAF, Bot Defense, API Security o Client-Side Defense
-3. **Traffic generator** e/o **CDN simulator** — distribuire per ultimi, puntando all'FQDN del load balancer F5 XC
+1. **Server di origine** — distribuire per primo, ospita le applicazioni che tutti gli altri componenti prendono come obiettivo
+2. **F5 XC HTTP load balancer** — configurare un origin pool che punti all'IP pubblico del server di origine, quindi creare un HTTP load balancer con policy WAF, Bot Defense, API Security o Client-Side Defense
+3. **Generatore di traffico** e/o **simulatore CDN** — distribuire per ultimi, puntandoli all'FQDN del load balancer F5 XC
 
-Le variabili Terraform di ciascun componente fanno riferimento agli output dei componenti distribuiti in precedenza. Consultare la documentazione del componente per i requisiti specifici delle variabili.
+Le variabili Terraform di ciascun componente fanno riferimento agli output dei componenti distribuiti in precedenza. Consultate la documentazione del componente per i requisiti specifici delle variabili.
 
-Utilizzare il [calcolatore prezzi Azure](https://azure.microsoft.com/en-us/pricing/calculator/) per le stime dei costi aggiornate. Eseguire `terraform destroy` quando il laboratorio è inattivo per interrompere gli addebiti.
+Utilizzate il [calcolatore dei prezzi Azure](https://azure.microsoft.com/en-us/pricing/calculator/) per le stime dei costi aggiornate. Eseguite `terraform destroy` quando il laboratorio non è in uso per interrompere gli addebiti.
