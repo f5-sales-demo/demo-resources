@@ -1,20 +1,18 @@
 ---
-title: Traffic Generator
-description: >-
-  Azure VM generating attack traffic, reconnaissance, and bot simulation against
-  F5 XC protected applications.
+title: トラフィックジェネレーター
+description: F5 XC で保護されたアプリケーションに対して攻撃トラフィック、偵察、ボットシミュレーションを生成する Azure VM。
 i18n:
   sourceHash: ee5e7f90e7ea
   translator: machine
 ---
 
-トラフィックジェネレーターは、F5 Distributed Cloud HTTP ロードバランサーに対して攻撃トラフィック、偵察スキャン、およびボットシミュレーションを生成する Azure VM です。WAF ポリシー、Bot Defense、API Security、および Client-Side Defense が正しく構成されていることを検証します。
+トラフィックジェネレーターは、F5 Distributed Cloud HTTP ロードバランサーに対して攻撃トラフィック、偵察スキャン、ボットシミュレーションを生成する Azure VM です。WAF ポリシー、Bot Defense、API Security、Client-Side Defense が正しく設定されていることを検証します。
 
 ## 検証される F5 XC 機能
 
 - **Web Application Firewall** — SQL インジェクション、XSS、コマンドインジェクション、パストラバーサルペイロード
 - **Bot Defense** — ヘッドレスブラウザ自動化、クレデンシャルスタッフィング、高速クローリング
-- **API Security** — OWASP API Top 10 攻撃、GraphQL の悪用、パラメーターファジング
+- **API Security** — OWASP API Top 10 攻撃、GraphQL の悪用、パラメータファジング
 - **Client-Side Defense** — Magecart スタイルのスキマーインジェクション、DOM 操作
 
-ツールカタログ、トラフィックスイート、Terraform 変数、およびデプロイの詳細については、[トラフィックジェネレーターのドキュメント](https://f5xc-salesdemos.github.io/traffic-generator/)を参照してください。
+ツールカタログ、トラフィックスイート、Terraform 変数、デプロイの詳細については、[トラフィックジェネレーターのドキュメント](https://f5xc-salesdemos.github.io/traffic-generator/)を参照してください。
