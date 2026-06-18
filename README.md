@@ -1,3 +1,17 @@
+🌐 English |
+[日本語](https://f5xc-salesdemos.github.io/demo-resources/ja/) |
+[한국어](https://f5xc-salesdemos.github.io/demo-resources/ko/) |
+[简体中文](https://f5xc-salesdemos.github.io/demo-resources/zh-cn/) |
+[繁體中文](https://f5xc-salesdemos.github.io/demo-resources/zh-tw/) |
+[Español](https://f5xc-salesdemos.github.io/demo-resources/es/) |
+[Português](https://f5xc-salesdemos.github.io/demo-resources/pt-br/) |
+[Français](https://f5xc-salesdemos.github.io/demo-resources/fr/) |
+[Deutsch](https://f5xc-salesdemos.github.io/demo-resources/de/) |
+[Italiano](https://f5xc-salesdemos.github.io/demo-resources/it/) |
+[العربية](https://f5xc-salesdemos.github.io/demo-resources/ar/) |
+[हिन्दी](https://f5xc-salesdemos.github.io/demo-resources/hi/) |
+[ไทย](https://f5xc-salesdemos.github.io/demo-resources/th/)
+
 # Demo Resources
 
 [![GitHub Pages Deploy](https://github.com/f5xc-salesdemos/demo-resources/actions/workflows/github-pages-deploy.yml/badge.svg)](https://github.com/f5xc-salesdemos/demo-resources/actions/workflows/github-pages-deploy.yml)
