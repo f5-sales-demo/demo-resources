@@ -1,61 +1,36 @@
 ---
-title: Overview
-description: What demo resources are, how to select components, and shared Azure prerequisites for deployment.
+title: Demo environment overview
+description: Component selection, cloud deployment choices, and integration order for F5 Distributed Cloud demos.
 ---
 
-Demo resources are pre-configured Azure virtual machines deployable via Terraform.
-Each component is a standalone VM with purpose-built software installed and configured
-through cloud-init at first boot.
+Choose an origin workload, then add a traffic generator or content delivery network (CDN) simulator when your demonstration needs it. Use each component's deployment guide for access requirements, tool versions, verification, and cleanup.
 
-## Selecting Components
+## Component selection
 
-Components are building blocks. Select them based on what your demo needs:
+| Component | Purpose | Deployment choices |
+| --- | --- | --- |
+| [Origin server](../origin-server/) | Applications and APIs behind F5 Distributed Cloud protection | Azure full-origin stack or separate AWS Juice Shop deployment |
+| [Traffic generator](../traffic-generator/) | Controlled security traffic and browser scenarios | Separate Azure and AWS offerings |
+| [CDN simulator](../cdn-simulator/) | Proxy requests with vendor CDN headers | Azure virtual machine |
 
-- **Origin server** provides vulnerable web applications that serve as targets for
-  F5 XC security features. Most demos need this.
-- **Traffic generator** produces attack and legitimate traffic against your demo
-  environment. Needed when demonstrating WAF efficacy, bot detection, or API
-  protection.
-- **CDN simulator** places an NGINX-based CDN edge between clients and origin,
-  injecting vendor-specific headers. Used for CDN integration demos.
+Azure and Amazon Web Services (AWS) offerings have different workloads and runtimes. Scenario execution does not by itself prove an F5 detection or mitigation. Follow the selected guide's verification steps and inspect the corresponding security evidence.
 
-## Shared Prerequisites
+## Deployment requirements
 
-All components require:
+Check the component guide for cloud access, Terraform and cloud CLI versions, network access, and required inputs. An Azure subscription does not satisfy AWS access requirements. Use only authorized demonstration environments.
 
-- An Azure subscription with contributor access
-- Terraform 1.5 or later
-- Azure CLI authenticated (`az login`)
-- An SSH key pair (default path `~/.ssh/id_ed25519.pub`)
+- [Origin deployment comparison](https://f5-sales-demo.github.io/origin-server/en/)
+- [Traffic generator deployment choices](https://f5-sales-demo.github.io/traffic-generator/en/)
+- [CDN simulator deployment guide](https://f5-sales-demo.github.io/cdn-simulator/en/03-deploy/)
 
-## Deployment Pattern
+Review the Terraform plan and the cloud cost estimate before provisioning. Keep credentials and state out of source control.
 
-Every component follows the same Terraform workflow:
+## Integration order
 
-1. Clone the component repo
-2. `cd terraform/`
-3. Copy `terraform.tfvars.example` to `terraform.tfvars` and set required variables (`subscription_id` is required for all; some components have additional required inputs)
-4. `terraform init && terraform plan && terraform apply`
-5. Verify via the component's health check endpoint
+1. Deploy the origin workload and verify its application health.
+2. Configure the F5 Distributed Cloud origin pool and HTTP load balancer with the selected security policy.
+3. Deploy the traffic generator or CDN simulator with the endpoint required by its integration guide.
 
-Your deployer identifier is auto-resolved from your Azure AD account and embedded in all resource names (e.g., `rg-origin-server-lab-rmordasiewicz`).
+## Verification and cleanup
 
-## Cross-Component Integration
-
-Components combine to create complete demo environments:
-
-```
-Traffic Generator ──► F5 XC HTTP LB (WAF/Bot/API/CSD) ──► Origin Server
-                                     ▲
-                               CDN Simulator
-```
-
-**Deployment order:**
-
-1. **Origin server** — deploy first, it hosts the applications that all other components target
-2. **F5 XC HTTP load balancer** — configure an origin pool pointing to the origin server's public IP, then create an HTTP load balancer with WAF, Bot Defense, API Security, or Client-Side Defense policies
-3. **Traffic generator** and/or **CDN simulator** — deploy last, pointing at the F5 XC load balancer FQDN
-
-Each component's terraform variables reference the outputs of previously deployed components. See the component documentation for specific variable requirements.
-
-Use the [Azure pricing calculator](https://azure.microsoft.com/en-us/pricing/calculator/) for current cost estimates. Run `terraform destroy` when the lab is idle to stop charges.
+Use the selected component's health checks and demonstration verification steps. Confirm both the workload response and the relevant F5 Distributed Cloud telemetry. Follow its cleanup guide when the environment is no longer needed to stop cloud charges.
