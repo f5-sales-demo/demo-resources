@@ -1,34 +1,23 @@
 ---
-title: Demo Resources
-description: Catalog of pre-configured Azure VM components for F5 Distributed Cloud demo environments. Each component is a Terraform-deployable VM with purpose-built software pre-installed.
+title: Demo resource catalog
+description: Deployment guides for origin servers, traffic generators, and a CDN simulator for F5 Distributed Cloud demos.
 template: splash
 hero:
-  title: Demo Resources
-  tagline: Pre-configured Azure VM components for F5 Distributed Cloud demo environments.
+  title: Demo resource catalog
+  tagline: Choose the infrastructure and workloads for your F5 Distributed Cloud demonstration.
 ---
 
 import { CardGrid } from '@astrojs/starlight/components';
 import LinkCard from '@f5-sales-demo/docs-theme/components/LinkCard.astro';
 
+Origin Server and Traffic Generator offer separate Azure and Amazon Web Services (AWS) deployments. Their workloads, runtimes, and verification differ. CDN Simulator uses Azure. Compare the offerings before choosing a deployment guide.
+
 ## Components
 
 <CardGrid>
-  <LinkCard
-    icon="f5xc:distributed-apps"
-    title="Origin Server"
-    description="Azure VM hosting vulnerable web applications for WAF, API security, bot defense, and client-side defense testing."
-    href="/demo-resources/en/origin-server/"
-  />
-  <LinkCard
-    icon="f5xc:application-traffic-insight"
-    title="Traffic Generator"
-    description="Azure VM generating attack traffic, reconnaissance, and bot simulation against F5 XC protected applications."
-    href="/demo-resources/en/traffic-generator/"
-  />
-  <LinkCard
-    icon="f5xc:content-delivery-network"
-    title="CDN Simulator"
-    description="Azure VM simulating CDN edge behavior with multi-vendor header injection for CDN integration demos."
-    href="/demo-resources/en/cdn-simulator/"
-  />
+  <LinkCard icon="f5xc:distributed-apps" title="Origin server" description="Compare the Azure full-origin stack with the separate AWS Juice Shop deployment." href="/demo-resources/en/origin-server/" />
+  <LinkCard icon="f5xc:application-traffic-insight" title="Traffic generator" description="Choose Azure or AWS guides for controlled traffic and browser scenarios." href="/demo-resources/en/traffic-generator/" />
+  <LinkCard icon="f5xc:content-delivery-network" title="CDN simulator" description="Deploy an Azure proxy that adds content delivery network (CDN) headers to origin requests." href="/demo-resources/en/cdn-simulator/" />
 </CardGrid>
+
+[Environment overview](/demo-resources/en/01-overview/) explains component selection and deployment order.

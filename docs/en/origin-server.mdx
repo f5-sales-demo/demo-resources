@@ -1,18 +1,19 @@
 ---
-title: Origin Server
-description: Azure VM hosting vulnerable web applications for WAF, API security, bot defense, and client-side defense testing.
+title: Origin server
+description: Azure full-origin and separate AWS Juice Shop deployment choices for F5 Distributed Cloud demos.
 ---
 
-The origin server is an Azure VM that hosts vulnerable web applications behind
-an nginx reverse proxy. It provides targets for demonstrating F5 Distributed
-Cloud security features.
+Origin Server offers an Azure full-origin stack and a separate Amazon Web Services (AWS) Juice Shop deployment. Choose the workload your demonstration requires.
 
-## F5 XC Features Validated
+## Deployment choices
 
-- **Web Application Firewall** — SQL injection, XSS, command injection, path traversal
-- **API Security** — REST and GraphQL API vulnerabilities, OWASP API Top 10
-- **Bot Defense** — credential stuffing targets, scraping endpoints
-- **Client-Side Defense** — JavaScript injection, Magecart-style attacks
+| Offering | Workload | Runtime |
+| --- | --- | --- |
+| Azure full-origin | Multiple vulnerable applications and mock APIs | Containers with nginx routing on an Ubuntu virtual machine |
+| AWS Juice Shop | Juice Shop | Private Fargate tasks behind an Application Load Balancer |
 
-See the [Origin Server documentation](https://f5-sales-demo.github.io/origin-server/)
-for architecture, applications, terraform variables, and deployment details.
+The AWS offering does not reproduce the Azure application stack. Review ingress, access, and integration requirements in the [Origin Server deployment comparison](https://f5-sales-demo.github.io/origin-server/en/).
+
+Use the selected application behind F5 Distributed Cloud to demonstrate web application firewall (WAF), API Protection, Bot Defense, or Client-Side Defense scenarios. The scenario and policy determine the evidence you need to verify protection.
+
+[Origin Server guides](https://f5-sales-demo.github.io/origin-server/en/) provide architecture, application details, deployment inputs, verification, and cleanup.

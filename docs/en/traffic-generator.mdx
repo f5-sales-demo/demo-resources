@@ -1,19 +1,14 @@
 ---
-title: Traffic Generator
-description: Azure VM generating attack traffic, reconnaissance, and bot simulation against F5 XC protected applications.
+title: Traffic generator
+description: Separate Azure and AWS traffic generation offerings for authorized F5 Distributed Cloud demos.
 ---
 
-The traffic generator is an Azure VM that produces attack traffic, reconnaissance
-scans, and bot simulation against F5 Distributed Cloud HTTP load balancers. It
-validates that WAF policies, Bot Defense, API Security, and Client-Side Defense
-are correctly configured.
+Traffic Generator produces controlled security traffic and browser scenarios against an authorized F5 Distributed Cloud demonstration endpoint. Choose the Azure deployment or the independent Amazon Web Services (AWS) worker deployment.
 
-## F5 XC Features Validated
+## Deployment choices
 
-- **Web Application Firewall** — SQL injection, XSS, command injection, path traversal payloads
-- **Bot Defense** — headless browser automation, credential stuffing, rapid crawling
-- **API Security** — OWASP API Top 10 attacks, GraphQL abuse, parameter fuzzing
-- **Client-Side Defense** — Magecart-style skimmer injection, DOM manipulation
+The Azure offering installs its toolset on a virtual machine through cloud-init. The AWS offering uses a worker with explicit network access controls, pinned runtime inputs, and browser evidence capture. Their cloud configuration, runtime, and detection evidence differ.
 
-See the [Traffic Generator documentation](https://f5-sales-demo.github.io/traffic-generator/)
-for tool catalog, traffic suites, terraform variables, and deployment details.
+Suites include web application firewall (WAF) payloads, bot simulation, API abuse, and Client-Side Defense browser scenarios. A completed scenario proves execution; verify the relevant F5 Distributed Cloud event before claiming detection or mitigation.
+
+[Traffic Generator guides](https://f5-sales-demo.github.io/traffic-generator/en/) provide the deployment choices, tool catalog, suite instructions, verification, and cleanup.
